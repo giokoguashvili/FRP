@@ -1,0 +1,19 @@
+{
+  "name": "rx-js-samples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kogoia/rx-js-samples.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kogoia/rx-js-samples/issues"
+  },
+  "homepage": "https://github.com/kogoia/rx-js-samples#readme"
+}
