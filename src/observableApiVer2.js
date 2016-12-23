@@ -9,16 +9,6 @@
 // }
 // Observable.fromEvent(domElement, eventName).subscribe(new Observer(output));
 
-// // API ver.3
-// Observable.prototype = {
-//     forEach: function(output) {
-//     }
-// }
-
-// var events = Observable.forEvent(domElement, eventName);
-// events.forEach(output);
-
-/////////////
 function Observer(onNext, onError, onComplete) {
     return {
         onNext: onNext,
@@ -51,3 +41,9 @@ function Observable(domElement, eventName) {
         }
     }
 }
+
+Observable.fromEvent = function(domElement, eventname) {
+    return new Observable(domElement, eventname);
+}
+
+
