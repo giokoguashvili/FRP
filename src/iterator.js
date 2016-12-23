@@ -24,5 +24,6 @@ range[Symbol.iterator] = function() {
 
 for (let item of range)
     console.log(item);
+    
 console.log(range);
 console.log("done");
