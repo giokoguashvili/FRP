@@ -1,43 +1,44 @@
-function Observer(onNext, onError, onComplete) {
+function Observable(func) {
+    this._forEachEvent = func;
+}
+
+function createObserver(onNext, onError, onComplete) {
     return {
         onNext: onNext,
-        onError: onError,
-        onComplete: onComplete
+        onError: onError || function() {},
+        onComplete: onComplete || function() {}
     }
-}
-
-function output(value) {
-    console.log(value);
-}
-
-
-
-
-function Observable(func) {
-    this._func = func;
 }
 
 Observable.prototype = {
-    forEach: function(callback) {
-
+    forEach: function(onNext, onError, onComplete) {
+        return this._forEachEvent(
+                createObserver(
+                    onNext,
+                    onError,
+                    onComplete
+                )
+            );
+    },
+    map: function(projectionFunction) {
+        let self = this;
+        return new Observable(function(observer) {
+            return self.forEach((evnt) => 
+                observer.onNext(
+                    projectionFunction(evnt)
+                )
+            ) 
+        });
     }
 }
 
-Observable.prototype.fromEvent = function(domElement, eventName) {
-    return new Observable(function forEach(observer) {
-
+Observable.fromEvent = function(domElement, eventname) {
+    return new Observable(function(observer) {
+        let handler = (e) => observer.onNext(e);
+        domElement.addEventListener(eventName, handler);
+        return {
+            dispose: () =>
+                domElement.removeListener(handler)      
+        }
     });
-} 
-
-
-
-
-var domElement = document.getElementsByClassName('box')[0];
-var clickEvents = Observable.fromEvent(domElement, 'click');
-
-clickEvents.forEach(function(e) {
-    console.log(e);
-});
-
-
-
+}

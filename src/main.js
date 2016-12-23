@@ -15,4 +15,14 @@ var eventName = 'mousemove';
 
 // API ver.3
 var events = Observable.fromEvent(domElement, eventName);
-events.forEach(output);
+
+events
+    .map((item) => {
+        return {
+            x: item.clientX,
+            y: item.clientY
+        };
+    })
+    .forEach((item) => {
+        console.log(item);
+    });
