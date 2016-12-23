@@ -23,6 +23,15 @@ events
             y: item.clientY
         };
     })
+    .filter((e) => e.x > 200 && e.y > 200)
+    .take(10)
     .forEach((item) => {
         console.log(item);
     });
+
+// // takeUntil API
+// var parentDiv = document.getElementById('parent');
+// var childDiv = document.getElementById('child')
+
+// var mouseMoveEvents = Observable.fromEvent(parentDiv, 'mousemove');
+// var mouseDownEvents = Observable.fromEvent(childDiv, 'mousedown');

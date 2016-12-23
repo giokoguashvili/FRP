@@ -29,7 +29,39 @@ Observable.prototype = {
                 )
             ) 
         });
+    },
+    filter: function(predicate) {
+        let self = this;
+        return new Observable(function(observer) {
+            return self.forEach((evnt) => {
+                if (predicate(evnt)) {
+                    observer.onNext(evnt);
+                }
+            })
+        });
+    },
+    take: function(num) {
+        let self = this;
+        return new Observable(function(observer) {
+            let counter = 0;
+            let subscription = self.forEach((e) => {
+                observer.onNext(e);
+                counter++;
+                if (counter === num) {
+                    subscription.dispose();
+                }
+            });
+            return subscription;
+        });
     }
+    // takeUntil: function(observable) {
+    //     let self = this;
+    //     return new Observable(function(observer) {
+    //         return observable.forEach(function(e) {
+
+    //         })
+    //     });
+    // }
 }
 
 Observable.fromEvent = function(domElement, eventname) {
@@ -38,7 +70,7 @@ Observable.fromEvent = function(domElement, eventname) {
         domElement.addEventListener(eventName, handler);
         return {
             dispose: () =>
-                domElement.removeListener(handler)      
+                domElement.removeEventListener(eventname, handler)      
         }
     });
 }
