@@ -53,24 +53,41 @@ Observable.prototype = {
             });
             return subscription;
         });
-    }
-    // takeUntil: function(observable) {
+    },
+    // concatAll: function() {
     //     let self = this;
     //     return new Observable(function(observer) {
-    //         return observable.forEach(function(e) {
+    //         self.forEach((observableItem) => {
 
     //         })
+
+    //         observer.onNext(e);
     //     });
     // }
+    takeUntil: function(observable) {
+        let self = this;
+        return new Observable(function(observer) {
+            let subscription = self.forEach(function(e) {
+                observer.onNext(e);
+            });
+            let subscription2 = observable.forEach(function(e) {
+                subscription2.dispose();
+                console.log(e);
+                subscription.dispose();
+                
+            });
+            return subscription;
+        });
+    }
 }
 
-Observable.fromEvent = function(domElement, eventname) {
+Observable.fromEvent = function(domElement, eventName) {
     return new Observable(function(observer) {
         let handler = (e) => observer.onNext(e);
         domElement.addEventListener(eventName, handler);
         return {
             dispose: () =>
-                domElement.removeEventListener(eventname, handler)      
+                domElement.removeEventListener(eventName, handler)      
         }
     });
 }
