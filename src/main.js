@@ -15,7 +15,7 @@ events
             y: item.clientY
         };
     })
-    .filter((e) => e.x > 150 && e.y > 150)
+    .filter((e) => e.x > 200 && e.y > 200)
     .takeUntil(clickEvents)
     .forEach((item) => {
         console.log(item);
